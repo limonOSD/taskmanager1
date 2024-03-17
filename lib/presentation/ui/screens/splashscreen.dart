@@ -16,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<SplashScreenController>().goToLoginScreen();
+    Get.find<SplashScreenController>().goToNextScreen();
   }
 
   @override

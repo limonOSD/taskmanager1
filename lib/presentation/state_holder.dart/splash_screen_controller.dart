@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:taskmanager1/presentation/ui/screens/loginscreen.dart';
+import 'package:taskmanager1/presentation/state_holder.dart/auth_controller.dart';
 
 class SplashScreenController extends GetxController {
-  goToLoginScreen() async {
+  goToNextScreen() async {
     Future.delayed(const Duration(seconds: 3))
-        .then((value) => Get.to(() => const LoginScreen()));
+        .then((value) => Get.find<AuthController>().checkUser());
   }
 }

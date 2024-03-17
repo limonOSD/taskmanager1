@@ -5,5 +5,6 @@ import 'package:taskmanager1/firebase_options.dart';
 
 void main() {
   runApp(const TaskManager());
+
   Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }

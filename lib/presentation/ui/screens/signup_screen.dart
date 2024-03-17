@@ -124,14 +124,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         duration: Duration(seconds: 2),
                                         isDismissible: true,
                                       ));
-                                    } else {
-                                      Get.showSnackbar(const GetSnackBar(
-                                        backgroundColor: Colors.red,
-                                        title: 'Failed',
-                                        message: 'Something went wrong',
-                                        duration: Duration(seconds: 2),
-                                        isDismissible: true,
-                                      ));
                                     }
                                   }
                                 },
