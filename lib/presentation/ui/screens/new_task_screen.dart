@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager1/presentation/state_holder.dart/new_task_controller.dart';
 import 'package:taskmanager1/presentation/ui/screens/add_new_task.dart';
+
 import 'package:taskmanager1/presentation/ui/widget/profile_summary_card.dart';
 import 'package:taskmanager1/presentation/ui/widget/summary_card.dart';
 
@@ -14,6 +15,9 @@ class NewTaskScreen extends StatefulWidget {
 }
 
 class _NewTaskScreenState extends State<NewTaskScreen> {
+  final TextEditingController _subjectTEController = TextEditingController();
+  final TextEditingController _descriptionTEContorller =
+      TextEditingController();
   Stream? taskStrem;
 
   getontheload() async {
@@ -113,13 +117,25 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
                                               Wrap(
                                                 children: [
                                                   IconButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        _subjectTEController
+                                                                .text =
+                                                            ds['subject'];
+                                                        _descriptionTEContorller
+                                                                .text =
+                                                            ds['description'];
+                                                        EditTasksDetails(
+                                                            ds['Id']);
+                                                      },
                                                       icon: const Icon(
                                                         Icons.edit,
                                                         color: Colors.purple,
                                                       )),
                                                   IconButton(
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        controller.deleteTask(
+                                                            ds['Id']);
+                                                      },
                                                       icon: const Icon(
                                                         Icons.delete,
                                                         color: Colors.red,
@@ -143,5 +159,71 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
         ),
       ),
     );
+  }
+
+  Future EditTasksDetails(String id) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Container(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(Icons.close),
+                      ),
+                      const Text(
+                        'Edit Task Details',
+                        style: TextStyle(color: Colors.amber),
+                      )
+                    ],
+                  ),
+                  TextFormField(
+                    controller: _subjectTEController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: 'title'),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    controller: _descriptionTEContorller,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        hintText: 'Description'),
+                    maxLines: 5,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        Map<String, dynamic> updateTasksInfo = {
+                          'Id': id,
+                          'subject': _subjectTEController.text,
+                          'description': _descriptionTEContorller.text,
+                        };
+                        await controller.updateTask(id, updateTasksInfo);
+                      },
+                      child: const Text('Update'))
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
